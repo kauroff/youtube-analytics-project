@@ -26,8 +26,12 @@ class Channel:
 
     @classmethod
     def get_service(cls):
-        youtube = build('youtube', 'v3', developerKey=cls.API_KEY)
-        return youtube
+        return build('youtube', 'v3', developerKey=cls.API_KEY)
+
+    # def get_info(self):
+    #     self.channel_id = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
+    #     formatted_data = json.loads(json.dumps(self.channel_id, indent=2, ensure_ascii=False))
+    #     return formatted_data
 
     def to_json(self, file):
         with open(file, 'a', encoding='utf-8') as json_file:
@@ -35,15 +39,37 @@ class Channel:
 
     @property
     def title(self):
-        pass
+        # youtube = build('youtube', 'v3', developerKey=self.API_KEY)
+        self.channel_id = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        formatted_data = json.loads(json.dumps(self.channel_id, indent=2, ensure_ascii=False))
+        return formatted_data['items'][0]['snippet']['title']
 
     @property
-    def video_count(self):
-        pass
+    def description(self):
+        self.channel_id = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        formatted_data = json.loads(json.dumps(self.channel_id, indent=2, ensure_ascii=False))
+        return formatted_data['items'][0]['snippet']['description']
 
     @property
     def url(self):
-        pass
+        self.channel_id = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        formatted_data = json.loads(json.dumps(self.channel_id, indent=2, ensure_ascii=False))
+        return formatted_data['items'][0]['snippet']['thumbnails']['url']
 
+    @property
+    def subs_count(self):
+        self.channel_id = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        formatted_data = json.loads(json.dumps(self.channel_id, indent=2, ensure_ascii=False))
+        return formatted_data['items'][0]['statistics']['subscriberCount']
 
-print(type(Channel.get_service()))
+    @property
+    def video_count(self):
+        self.channel_id = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        formatted_data = json.loads(json.dumps(self.channel_id, indent=2, ensure_ascii=False))
+        return formatted_data['items']['statistics']['videoCount']
+
+    @property
+    def views_count(self):
+        self.channel_id = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        formatted_data = json.loads(json.dumps(self.channel_id, indent=2, ensure_ascii=False))
+        return formatted_data['items'][0]['statistics']['viewCount']
