@@ -85,5 +85,3 @@ class Channel:
         if self.subs_count <= other.subs_count:
             return True
         return False
-
-    #def
