@@ -19,9 +19,9 @@ class Channel:
         self.title = channel['items'][0]['snippet']['title']
         self.description = channel['items'][0]['snippet']['description']
         self.url = f'https://www.youtube.com/channel/{channel["items"][0]["id"]}'
-        self.subs_count = channel['items'][0]['statistics']['subscriberCount']
-        self.video_count = channel['items'][0]['statistics']['videoCount']
-        self.views_count = channel['items'][0]['statistics']['viewCount']
+        self.subs_count = int(channel['items'][0]['statistics']['subscriberCount'])
+        self.video_count = int(channel['items'][0]['statistics']['videoCount'])
+        self.views_count = int(channel['items'][0]['statistics']['viewCount'])
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -56,3 +56,34 @@ class Channel:
     @property
     def channel_id(self) -> str:
         return self.__channel_id
+
+    def __str__(self):
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other):
+        return self.subs_count + other.subs_count
+
+    def __sub__(self, other):
+        return self.subs_count - other.subs_count
+
+    def __gt__(self, other):
+        if self.subs_count > other.subs_count:
+            return True
+        return False
+
+    def __ge__(self, other):
+        if self.subs_count >= other.subs_count:
+            return True
+        return False
+
+    def __lt__(self, other):
+        if self.subs_count < other.subs_count:
+            return True
+        return False
+
+    def __le__(self, other):
+        if self.subs_count <= other.subs_count:
+            return True
+        return False
+
+    #def
