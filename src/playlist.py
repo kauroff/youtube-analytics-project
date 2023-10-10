@@ -12,15 +12,13 @@ class PlayList:
 
     def __init__(self, playlist_id):
         self.playlist_id = playlist_id
+        playlist_info = youtube.playlists().list(id=playlist_id, part='snippet').execute()
+        self.title = playlist_info['items'][0]['snippet']['title']
+        url = playlist_info['items'][0]['id']
+        self.url = f'https://www.youtube.com/playlist?list={url}'
 
-    def function(self):
-        playlist_videos = youtube.playlistItems().list(playlistId=self.playlist_id,
-                                                       part='contentDetails',
-                                                       maxResults=50,
-                                                       ).execute()
+    def total_duration(self):
+        pass
 
-        return playlist_videos
-
-
-pl = PlayList('PLv_zOGKKxVpj-n2qLkEM2Hj96LO6uqgQw')
-print(pl.function())
+    def show_best_video(self):
+        pass
