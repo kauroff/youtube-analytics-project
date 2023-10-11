@@ -19,6 +19,7 @@ class PlayList:
 
     def total_duration(self):
         x = sum()
+        x = sum()
 
     def show_best_video(self):
         pass
