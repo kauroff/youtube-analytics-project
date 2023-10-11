@@ -18,8 +18,7 @@ class PlayList:
         self.url = f'https://www.youtube.com/playlist?list={url}'
 
     def total_duration(self):
-        x = sum()
-        x = sum()
+        pass
 
     def show_best_video(self):
         pass
