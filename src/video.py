@@ -14,13 +14,19 @@ class Video:
         video_response = youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
                                                id=id_video).execute()
         self.id_video = id_video
-        self.video_title: str = video_response['items'][0]['snippet']['title']
-        self.url = f'https://www.youtube.com/watch?v={self.id_video}'
-        self.view_count: int = video_response['items'][0]['statistics']['viewCount']
-        self.like_count: int = video_response['items'][0]['statistics']['likeCount']
+        try:
+            self.title: str = video_response['items'][0]['snippet']['title']
+            self.url = f'https://www.youtube.com/watch?v={self.id_video}'
+            self.view_count: int = video_response['items'][0]['statistics']['viewCount']
+            self.like_count: int = video_response['items'][0]['statistics']['likeCount']
+        except IndexError:
+            self.title = None
+            self.url = None
+            self.view_count = None
+            self.like_count = None
 
     def __str__(self):
-        return f'{self.video_title}'
+        return f'{self.title}'
 
 
 class PLVideo(Video):
@@ -29,4 +35,4 @@ class PLVideo(Video):
         self.id_playlist = id_playlist
 
     def __str__(self):
-        return f'{self.video_title}'
+        return f'{self.title}'
